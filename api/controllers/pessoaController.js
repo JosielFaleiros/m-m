@@ -5,30 +5,22 @@ var mongoose = require('mongoose'),
     Cidade = mongoose.model('Cidades');
 
 exports.list_all = function(req, res) {
-
-    Cidade.find({nome: req.query.cidade}, function(err, cidade) {
-        Pessoa.find({cidade: cidade}, function(err, pessoa) {
+    if(req.query.cidade) {
+        Cidade.find({nome: req.query.cidade}, function(err, cidade) {
+            Pessoa.find({cidade: cidade}, function(err, pessoa) {
+                if (err)
+                res.send(err);
+                res.json(pessoa);
+            });
+        });
+    } else {
+        Pessoa.find({}).populate('cidade').exec(function(err, pessoa) {
             if (err)
-            res.send(err);
+                res.send(err);
             res.json(pessoa);
         });
-    });
+    }
 };
-
-
-exports.por_cidade = function(req, res) {
-
-    Cidade.find({nome: req.query.cidade}, function(err, cidade) {
-        Pessoa.find({cidade: cidade}, function(err, pessoa) {
-            if (err)
-            res.send(err);
-            res.json(pessoa);
-        });
-    });
-};
-
-
-
 
 exports.create = function(req, res) {
   var new_pessoa = new Pessoa(req.body);
