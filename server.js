@@ -5,8 +5,8 @@ var express = require('express'),
     Cidade = require('./api/models/cidadeModel'),
     Pessoa = require('./api/models/pessoaModel'), //created model loading here
     bodyParser = require('body-parser');
-
-
+var cors = require('cors')
+app.use(cors())
 
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise;
@@ -15,10 +15,12 @@ mongoose.connect('mongodb://localhost/MailMarketing', {useMongoClient: true});
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-var routesCidade = require('./api/routes/cidadeRoutes.js'); //importing route
+var routesCidade = require('./api/routes/cidadeRoutes'); //importing route
 routesCidade(app); //register the route
-var routesPessoa = require('./api/routes/pessoaRoutes.js'); //importing route
+var routesPessoa = require('./api/routes/pessoaRoutes'); //importing route
 routesPessoa(app); //register the route
+var routesMensagem = require('./api/routes/mensagemRoutes');
+routesMensagem(app);
 
 app.listen(port);
 
