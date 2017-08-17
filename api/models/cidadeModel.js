@@ -6,6 +6,7 @@ var CidadeSchema = new Schema({
   nome: {
     type: String,
     required: true,
+    index: true,
     unique: true
   }
 });
