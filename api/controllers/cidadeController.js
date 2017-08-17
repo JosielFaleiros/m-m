@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
     Cidade = mongoose.model('Cidades');
 
 exports.list_all = function (req, res) {
-    Cidade.find({}, function (err, cidade) {
+    Cidade.find({}, '-_id -__v', function (err, cidade) {
         if (err)
             res.send(err);
         res.json(cidade);
@@ -26,7 +26,7 @@ exports.create = function (req, res) {
 
 
 exports.read = function (req, res) {
-    Cidade.findById(req.params.cidadeId, function (err, cidade) {
+    Cidade.findById(req.params.cidadeId, '-_id -__v' ,function (err, cidade) {
         if (err)
             res.send(err);
         res.json(cidade);

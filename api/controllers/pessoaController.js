@@ -5,16 +5,17 @@ var mongoose = require('mongoose'),
     Cidade = mongoose.model('Cidades');
 
 exports.list_all = function (req, res) {
+    console.log(req.query.mensagem);
     if (req.query.cidade) {
         Cidade.find({ nome: req.query.cidade }, function (err, cidade) {
-            Pessoa.find({ cidade: cidade }, function (err, pessoa) {
+            Pessoa.find({ cidade: cidade }, '-__v', function (err, pessoa) {
                 if (err)
                     res.send(err);
                 res.json(pessoa);
             });
         });
     } else {
-        Pessoa.find({}).populate('cidade').exec(function (err, pessoa) {
+        Pessoa.find({}, '-__v').populate('cidade').exec(function (err, pessoa) {
             if (err)
                 res.send(err);
             res.json(pessoa);
@@ -33,7 +34,7 @@ exports.create = function (req, res) {
 
 
 exports.read = function (req, res) {
-    Pessoa.findById(req.params.pessoaId).populate('cidade').exec(function (err, pessoa) {
+    Pessoa.findById(req.params.pessoaId, '-_id -__v').populate('cidade').exec(function (err, pessoa) {
         if (err)
             res.send(err);
 
