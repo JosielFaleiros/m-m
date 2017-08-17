@@ -1,7 +1,6 @@
 'use strict';
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-// var Cidade = require('./cidadeModel');
 
 var PessoaSchema = new Schema({
   email: {
