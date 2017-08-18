@@ -6,7 +6,6 @@ var mongoose = require('mongoose'),
     Cidade = mongoose.model('Cidades');
 
 exports.enviar = function (req, res) {
-    console.log(req.body.mensagem);
     if (req.body.cidade) {
         Cidade.find({ nome: req.body.cidade }, function (err, cidade) {
             Pessoa.find({ cidade: cidade }, '-__v -_id -cidade', function (err, pessoa) {
@@ -16,10 +15,10 @@ exports.enviar = function (req, res) {
             });
         });
     } else {
-        Pessoa.find({}, '-__v').populate('cidade').exec(function (err, pessoa) {
+        Pessoa.find({}, '-__v -_id -cidade').populate('cidade').exec(function (err, pessoa) {
             if (err)
                 res.send(err);
-            res.json(pessoa);
+            res.json([pessoa, req.body.mensagem]);
         });
     }
 };

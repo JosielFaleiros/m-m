@@ -5,10 +5,9 @@ var mongoose = require('mongoose'),
     Cidade = mongoose.model('Cidades');
 
 exports.list_all = function (req, res) {
-    console.log(req.query.mensagem);
     if (req.query.cidade) {
         Cidade.find({ nome: req.query.cidade }, function (err, cidade) {
-            Pessoa.find({ cidade: cidade }, '-__v', function (err, pessoa) {
+            Pessoa.find({ cidade: cidade }, '-__v -cidade', function (err, pessoa) {
                 if (err)
                     res.send(err);
                 res.json(pessoa);
