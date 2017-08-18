@@ -5,14 +5,12 @@ var mongoose = require('mongoose'),
     Cidade = mongoose.model('Cidades');
 
 exports.list_all = function (req, res) {
-    Cidade.find({}, '-_id -__v', function (err, cidade) {
+    Cidade.find({}, '-__v', function (err, cidade) {
         if (err)
             res.send(err);
         res.json(cidade);
     });
 };
-
-
 
 
 exports.create = function (req, res) {

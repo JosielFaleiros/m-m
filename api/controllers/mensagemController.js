@@ -9,10 +9,10 @@ exports.enviar = function (req, res) {
     console.log(req.body.mensagem);
     if (req.body.cidade) {
         Cidade.find({ nome: req.body.cidade }, function (err, cidade) {
-            Pessoa.find({ cidade: cidade }, '-__v', function (err, pessoa) {
+            Pessoa.find({ cidade: cidade }, '-__v -_id -cidade', function (err, pessoa) {
                 if (err)
                     res.send(err);
-                res.json(pessoa);
+                res.json([pessoa, req.body.mensagem]);
             });
         });
     } else {

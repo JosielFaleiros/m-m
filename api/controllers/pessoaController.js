@@ -15,7 +15,7 @@ exports.list_all = function (req, res) {
             });
         });
     } else {
-        Pessoa.find({}, '-__v').populate('cidade').exec(function (err, pessoa) {
+        Pessoa.find({}, '-__v').populate('cidade', '-_id -__v').exec(function (err, pessoa) {
             if (err)
                 res.send(err);
             res.json(pessoa);
